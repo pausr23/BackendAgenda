@@ -1,3 +1,36 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.bg-color{ background: #EEEEEE}
+
+.secondary-color{background: #7193E3;}
+
+.third-color{background: #E97258;}
+
+.font-side{
+    font-family: "Roboto", sans-serif;
+    color: #272727;
+    font-weight: 600;
+}
+
+.font-titles{
+    font-family: "Roboto", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+    color: #272727;
+}
+
+.font-titles-secondary{
+    font-family: "Roboto", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+    color: #fff;
+}
+
+.font-secondary-cl{
+    font-family: "Roboto", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+    color: #3B3B3B;
+}
