@@ -13,6 +13,13 @@ return new class extends Migration
     {
         Schema::create('registered_activities', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('categories_activities_id')->constrained();
+            $table->foreignId('tags_activities_id')->constrained();
+            $table->foreignId('status_activities_id')->constrained();
+            $table->string('name');
+            $table->string('description');
+            $table->string('image');
+            $table->date('scheduled_at');
             $table->timestamps();
         });
     }

@@ -10,7 +10,10 @@ class RegisteredActivity extends Model
     use HasFactory;
 
     protected $fillable = [
-        'title',
+        'categories_activities_id',
+        'tags_activities_id',
+        'status_activities_id',
+        'name',
         'description',
         'image',
         'scheduled_at'
