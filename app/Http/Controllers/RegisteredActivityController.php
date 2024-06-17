@@ -25,8 +25,14 @@ class RegisteredActivityController extends Controller
         ->join('categories_activities', 'registered_activities.categories_activities_id', '=', 'categories_activities.id')
         ->join('tags_activities', 'registered_activities.tags_activities_id', '=', 'tags_activities.id')
         ->join('status_activities', 'registered_activities.status_activities_id', '=', 'status_activities.id')
-        ->where('registered_activities.id', $id)
+        ->where('registered_activities.id', 1)
         ->get();
+
+        foreach ($activities as $activity) {
+            $activity->image = "http://eventosbk.test/storage/images/".$activity->image;
+        }
+
+        return $activity;
     }
 
     /**
@@ -51,7 +57,7 @@ class RegisteredActivityController extends Controller
             'categories_activities_id' => $request->categories_activities_id,
             'tags_activities_id' =>$request->tags_activities_id,
             'status_activities_id'=>$request->status_activities_id,
-            'name' =>$request->name,
+            'title' =>$request->title,
             'description' =>$request->description,
             'image'=>$file_name,
             'scheduled_at'=>$request->schedule_at,
@@ -67,7 +73,7 @@ class RegisteredActivityController extends Controller
         //
         $activity = RegisteredActivity::select(
             'categories_activities.name as category',
-            'registered_activities.name',
+            'registered_activities.title',
             'registered_activities.description',
             'registered_activities.image',
             'registered_activities.schedule_at',

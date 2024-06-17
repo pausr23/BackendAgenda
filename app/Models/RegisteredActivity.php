@@ -13,7 +13,7 @@ class RegisteredActivity extends Model
         'categories_activities_id',
         'tags_activities_id',
         'status_activities_id',
-        'name',
+        'title',
         'description',
         'image',
         'scheduled_at'

@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('categories_activities_id')->constrained();
             $table->foreignId('tags_activities_id')->constrained();
             $table->foreignId('status_activities_id')->constrained();
-            $table->string('name');
+            $table->string('title');
             $table->string('description');
             $table->string('image');
             $table->date('scheduled_at');
