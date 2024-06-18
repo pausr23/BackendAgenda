@@ -16,7 +16,6 @@ class StatusActivitiesSeeder extends Seeder
     {
         //
         StatusActivity::create(['name'=>'Active']);
-        StatusActivity::create(['name'=>'Pospossed']);
         StatusActivity::create(['name'=>'Ended']);
     }
 }

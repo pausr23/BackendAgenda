@@ -38,10 +38,10 @@
 
                         <div class="mt-2 mb-2">
                             <div>
-                                <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tag:</label>
-                                <select name="tags_activities_id" class="bg-gray-10 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-80 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                    @foreach ($tags as $tag)
-                                        <option value="{{ $tag->id }}">{{ $tag->name }}</option>
+                                <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Course:</label>
+                                <select name="courses_activities_id" class="bg-gray-10 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-80 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                    @foreach ($courses as $course)
+                                        <option value="{{ $course->id }}">{{ $course->name }}</option>
                                     @endforeach
                                 </select>
                             </div>

@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 use App\Models\StatusActivity;
 use App\Models\CategoriesActivity;
-use App\Models\TagsActivity;
+use App\Models\CoursesActivity;
 use App\Models\RegisteredActivity;
 
 class AdminActivityController extends Controller
@@ -24,11 +24,11 @@ class AdminActivityController extends Controller
             'registered_activities.description',
             'registered_activities.scheduled_at',
             'status_activities.name as status',
-            'tags_activities.name as tag'
+            'courses_activities.name as course'
         )
         ->join('categories_activities', 'registered_activities.categories_activities_id', '=', 'categories_activities.id')
         ->join('status_activities', 'registered_activities.status_activities_id', '=', 'status_activities.id')
-        ->join('tags_activities', 'registered_activities.tags_activities_id', '=', 'tags_activities.id') 
+        ->join('courses_activities', 'registered_activities.courses_activities_id', '=', 'courses_activities.id') 
         ->where('status_activities_id', 1)
         ->orderBy('scheduled_at', 'asc')
         ->get();
@@ -46,10 +46,10 @@ class AdminActivityController extends Controller
     public function create()
     {
         $categories = CategoriesActivity::all();
-        $tags = TagsActivity::all();
+        $courses = CoursesActivity::all();
         $status = StatusActivity::all();
         
-        return view('activities.create', compact('categories', 'tags', 'status'));
+        return view('activities.create', compact('categories', 'courses', 'status'));
     }
 
     /**
@@ -63,7 +63,7 @@ class AdminActivityController extends Controller
 
         RegisteredActivity::create([
             'categories_activities_id' => $request->categories_activities_id,
-            'tags_activities_id' => $request->tags_activities_id,
+            'courses_activities_id' => $request->courses_activities_id,
             'status_activities_id' => $request->status_activities_id,
             'title' => $request->title,
             'description' => $request->description,
@@ -73,6 +73,34 @@ class AdminActivityController extends Controller
 
         return redirect()->route('activities.index')->with('success','Activity registered successfully.');
     }
+
+
+    public function search(Request $request)
+    {
+        $query = RegisteredActivity::select(
+            'registered_activities.id',
+            'categories_activities.name as category',
+            'courses_activities.name as course',
+            'registered_activities.title',
+            'registered_activities.scheduled_at'
+        )
+        ->join('categories_activities', 'registered_activities.categories_activities_id', '=', 'categories_activities.id')
+        ->join('courses_activities', 'registered_activities.courses_activities_id', '=', 'courses_activities.id')
+        ->where('status_activities_id', 1);
+
+        if ($request->has('activity') && $request->activity != '') {
+            $query->where('registered_activities.title', 'LIKE', '%' . $request->activity . '%');
+        }
+
+        if ($request->category != 0) {
+            $query->where('categories_activities.id', $request->category);
+        }
+
+        $activities = $query->orderBy('scheduled_at', 'asc')->paginate(10);
+        $total = $activities->total();
+
+        return view('activities.results', compact('activities', 'total'));
+}
 
     /**
      * Display the specified resource.
@@ -85,11 +113,11 @@ class AdminActivityController extends Controller
             'registered_activities.description',
             'registered_activities.image',
             'registered_activities.scheduled_at',
-            'tags_activities.name as tag',
+            'courses_activities.name as courses',
             'status_activities.name as status'
         )
         ->join('categories_activities', 'registered_activities.categories_activities_id', '=', 'categories_activities.id')
-        ->join('tags_activities', 'registered_activities.tags_activities_id', '=', 'tags_activities.id')
+        ->join('courses_activities', 'registered_activities.courses_activities_id', '=', 'courses_activities.id')
         ->join('status_activities', 'registered_activities.status_activities_id', '=', 'status_activities.id')
         ->where('registered_activities.id', $id)
         ->get();
@@ -104,12 +132,12 @@ class AdminActivityController extends Controller
     {
         $activity = RegisteredActivity::find($id);
         $categories = CategoriesActivity::all();
-        $tags = TagsActivity::all();
+        $courses = CoursesActivity::all();
         $status = StatusActivity::all();
 
         $currentImage = asset('storage/images/' . $activity->image);
         
-        return view('activities.edit', compact('activity', 'categories', 'tags', 'status'));
+        return view('activities.edit', compact('activity', 'categories', 'courses', 'status'));
     }
 
     /**
@@ -134,7 +162,7 @@ class AdminActivityController extends Controller
 
             $query->update([
                 'categories_activities_id' => $request->categories_activities_id,
-                'tags_activities_id' => $request->tags_activities_id,
+                'courses_activities_id' => $request->courses_activities_id,
                 'status_activities_id' => $request->status_activities_id,
                 'title' => $request->title,
                 'description' => $request->description,

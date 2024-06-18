@@ -17,4 +17,6 @@ use App\Http\Controllers\AdminActivityController;
 
 Route::resource('activities', AdminActivityController::class);
 
+Route::get('/activities/search/activity', [AdminActivityController::class, 'search'])->name('activities.search');
+
 

@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('registered_activities', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('courses_activities_id')->constrained();
             $table->foreignId('categories_activities_id')->constrained();
-            $table->foreignId('tags_activities_id')->constrained();
             $table->foreignId('status_activities_id')->constrained();
             $table->string('title');
             $table->string('description');
@@ -22,6 +22,7 @@ return new class extends Migration
             $table->date('scheduled_at');
             $table->timestamps();
         });
+
     }
 
     /**

@@ -2,12 +2,12 @@
  
 @section('content')
 
-    <div class="w-full grid pl-14">
+    <div class="w-full grid pl-36">
 
 
         <div class="my-5">
             
-            <form class="grid grid-cols-[20%_20%_20%_20%_15%] gap-2" action="" method="GET">
+            <form class="grid grid-cols-[20%_20%_20%_20%_15%] gap-2" action="{{ route('activities.search') }}" method="GET">
                 <div>
                     <label for="activity" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Title:</label>
                     <input id="activity" type="text" class="bg-gray-10 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" name="activity" placeholder="Activity Name" >
@@ -22,16 +22,8 @@
                     </select>
                 </div>
                 <div>
-                    <label for="from_date" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">From:</label>
-                    <input id="from_date" type="date" class="bg-gray-10 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" name="from_date" value="{{ date('Y-m-d') }}" min="{{ date('Y-m-d') }}">
-                </div>
-                <div>
-                    <label for="to_date" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">To:</label>
-                    <input id="to_date" type="date" class="bg-gray-10 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" name="to_date" value="{{ date('Y-m-d') }}" min="{{ date('Y-m-d') }}">
-                </div>
-                <div>
-                    <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 mt-[1.9rem]">
-                        <img class="" src="https://i.ibb.co/NYk96s9/search.png" alt="create">
+                    <button type="submit" class="bg-white hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-14 px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 mt-[1.9rem]">
+                        <img src="https://i.ibb.co/NYk96s9/search.png" alt="create">
                     </button>
                 </div>
             </form>
@@ -46,7 +38,7 @@
         </div>
         @endif
 
-        <div class="grid gap-16"> 
+        <div class="w-[90%] grid gap-16">  
             <div class="bg-white py-10 rounded-2xl">
                 <h1 class="text-4xl font-bold mt-6 ml-10 mb-10">Activities</h1>
             <div class="grid grid-cols-2 pb-10">
@@ -60,7 +52,7 @@
                 <tr>
                     <th scope="col" class="px-6 py-3">Title</th>
                     <th scope="col" class="px-6 py-3">Category</th>
-                    <th scope="col" class="px-6 py-3">Tag</th>
+                    <th scope="col" class="px-6 py-3">Course</th>
                     <th scope="col" class="px-6 py-3">State</th>
                     <th scope="col" class="px-6 py-3">Date</th>
                     <th scope="col" class="px-6 py-3" width="280px">Action</th>
@@ -71,7 +63,7 @@
                 <tr class="border-b border-neutral-200 dark:border-white/10">
                     <td>{{ $activity->title }}</td>
                     <td>{{ $activity->category }}</td>
-                    <td>{{ $activity->tag }}</td>
+                    <td>{{ $activity->course }}</td>
                     <td>{{ $activity->status }}</td>
                     <td>{{ $activity->scheduled_at }}</td>
                     <td>

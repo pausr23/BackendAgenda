@@ -6,35 +6,35 @@ use Illuminate\Http\Request;
 
 use App\Models\RegisteredActivity;
 
+use Illuminate\Support\Carbon;
+
 class RegisteredActivityController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
-    {
-        $activities = RegisteredActivity::select(
-            'registered_activities.id',
-            'registered_activities.title',
-            'registered_activities.image',
-            'categories_activities.name as category',
-            'status_activities.name as status',
-            'tags_activities.name as tag',
-        )
+{
+    $activities = RegisteredActivity::select(
+        'registered_activities.id',
+        'registered_activities.title',
+        'registered_activities.image',
+        'registered_activities.scheduled_at',
+        'categories_activities.name as category',
+        'status_activities.name as status',
+        'courses_activities.name as course'
+    )
+    ->join('categories_activities', 'registered_activities.categories_activities_id', '=', 'categories_activities.id')
+    ->join('courses_activities', 'registered_activities.courses_activities_id', '=', 'courses_activities.id')
+    ->join('status_activities', 'registered_activities.status_activities_id', '=', 'status_activities.id')
+    ->get();
 
-        ->join('categories_activities', 'registered_activities.categories_activities_id', '=', 'categories_activities.id')
-        ->join('tags_activities', 'registered_activities.tags_activities_id', '=', 'tags_activities.id')
-        ->join('status_activities', 'registered_activities.status_activities_id', '=', 'status_activities.id')
-        ->where('registered_activities.id', 1)
-        ->get();
-
-        foreach ($activities as $activity) {
-            $activity->image = "http://eventosbk.test/storage/images/".$activity->image;
-        }
-
-        return $activity;
+    foreach ($activities as $activity) {
+        $activity->image = "http://eventosbk.test/storage/images/".$activity->image;
     }
 
+    return $activities;
+}
     /**
      * Show the form for creating a new resource.
      */
@@ -55,7 +55,7 @@ class RegisteredActivityController extends Controller
 
         RegisteredActivity::create([
             'categories_activities_id' => $request->categories_activities_id,
-            'tags_activities_id' =>$request->tags_activities_id,
+            'courses_activities_id' =>$request->courses_activities_id,
             'status_activities_id'=>$request->status_activities_id,
             'title' =>$request->title,
             'description' =>$request->description,
@@ -76,11 +76,19 @@ class RegisteredActivityController extends Controller
             'registered_activities.title',
             'registered_activities.description',
             'registered_activities.image',
-            'registered_activities.schedule_at',
+            'registered_activities.scheduled_at',
             'status_activities.name as status',
-            'tags_status.name as tag'
+            'courses_activities.name as course'
         )
+        ->join('courses_activities', 'registered_activities.courses_activities_id', '=', 'courses_activities.id')
+        ->join('categories_activities', 'registered_activities.categories_activities_id', '=', 'categories_activities.id')
+        ->join('status_activities', 'registered_activities.status_activities_id', '=', 'status_activities.id')
+        ->where('registered_activities.id', $id)
         ->get();
+
+        $activity[0]->image = "http://eventosbk.test/storage/images/".$activity[0]->image;
+
+        return $activity;
     }
 
     /**
@@ -105,5 +113,25 @@ class RegisteredActivityController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function test()
+    {
+        Carbon::setLocale('es');
+        $activity = RegisteredActivity::select(
+            'registered_activities.scheduled_at'
+        )
+        ->where('registered_activities.id', 10)
+        ->get();
+
+        $activity = $activity[0]->scheduled_at;
+
+        $date = Carbon::parse($activity)->isoFormat('dddd, D [de] MMMM [de] YYYY');
+        $time = Carbon::parse($activity)->format('h:i A');
+
+        $now = Carbon::now();
+        $events = RegisteredActivity::where('scheduled_at', '<', $now)->get();
+        
+        return $events;
     }
 }

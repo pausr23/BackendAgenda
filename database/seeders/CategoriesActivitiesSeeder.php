@@ -15,10 +15,9 @@ class CategoriesActivitiesSeeder extends Seeder
     public function run(): void
     {
         //
-        CategoriesActivity::create(['name'=>'Career']);
-        CategoriesActivity::create(['name'=>'Course']);
-        CategoriesActivity::create(['name'=>'University']);
-        CategoriesActivity::create(['name'=>'Students']);
+        CategoriesActivity::create(['name'=>'Task']);
+        CategoriesActivity::create(['name'=>'Announcement']);
+        CategoriesActivity::create(['name'=>'Event']);
 
     }
 }

@@ -11,7 +11,7 @@ class RegisteredActivity extends Model
 
     protected $fillable = [
         'categories_activities_id',
-        'tags_activities_id',
+        'courses_activities_id',
         'status_activities_id',
         'title',
         'description',

@@ -3,6 +3,10 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\RegisteredActivityController;
+use App\Http\Controllers\CategoriesActivityController;
+use App\Http\Controllers\CoursesActivityController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -17,3 +21,10 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('/activities/all', [RegisteredActivityController::class, 'index']);
+Route::get('/activities/test', [RegisteredActivityController::class, 'test']);
+Route::get('/activities/activity/{id}', [RegisteredActivityController::class, 'show']);
+
+Route::get('/categories/all', [CategoriesActivityController::class, 'index']);
+Route::get('/courses/all', [CoursesActivityController::class, 'index']);
