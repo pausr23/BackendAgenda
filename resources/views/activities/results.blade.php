@@ -45,5 +45,5 @@
         </tbody>
     </table>
     
-    {{ $activities->onEachSide(5) }}
+   
 @endsection

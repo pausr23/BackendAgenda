@@ -57,13 +57,13 @@
 
             <div class="mt-2 mb-2">
                 <div>
-                    <label for="tags_activities_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tags:</label>
-                    <select name="tags_activities_id" class="w-96 bg-gray-10 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                        @foreach ($tags as $tag)
-                            @if ($tag->id == $activity->tags_activities_id)
-                                <option value="{{ $tag->id }}" selected>{{ $tag->name }}</option>
+                    <label for="courses_activities_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Course:</label>
+                    <select name="courses_activities_id" class="w-96 bg-gray-10 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        @foreach ($courses as $course)
+                            @if ($course->id == $activity->courses_activities_id)
+                                <option value="{{ $course->id }}" selected>{{ $course->name }}</option>
                             @else
-                                <option value="{{ $tag->id }}">{{ $tag->name }}</option>
+                                <option value="{{ $course->id }}">{{ $course->name }}</option>
                             @endif
                         @endforeach
                     </select>

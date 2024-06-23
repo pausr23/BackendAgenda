@@ -77,30 +77,60 @@ class AdminActivityController extends Controller
 
     public function search(Request $request)
     {
+        $result = $this->performSearch($request, false);
+    
+        $activities = $result['activities'];
+        $total = $result['total'];
+    
+        return view('activities.results', compact('activities', 'total'));
+    }
+    
+    public function apiSearch(Request $request)
+    {
+        $result = $this->performSearch($request, true);
+    
+        return response()->json([
+            'data' => $result['activities'],
+            'total' => $result['total'],
+        ]);
+    }
+    
+    private function performSearch(Request $request, $api = false)
+    {
         $query = RegisteredActivity::select(
             'registered_activities.id',
             'categories_activities.name as category',
             'courses_activities.name as course',
+            'registered_activities.description',
+            'registered_activities.image',
             'registered_activities.title',
+            'status_activities.name as status',
             'registered_activities.scheduled_at'
         )
         ->join('categories_activities', 'registered_activities.categories_activities_id', '=', 'categories_activities.id')
         ->join('courses_activities', 'registered_activities.courses_activities_id', '=', 'courses_activities.id')
+        ->join('status_activities', 'registered_activities.status_activities_id', '=', 'status_activities.id')
         ->where('status_activities_id', 1);
-
-        if ($request->has('activity') && $request->activity != '') {
-            $query->where('registered_activities.title', 'LIKE', '%' . $request->activity . '%');
+    
+        if ($request->has('title') && $request->title != '') {
+            $query->where('registered_activities.title', 'LIKE', '%' . $request->title . '%');
         }
-
-        if ($request->category != 0) {
-            $query->where('categories_activities.id', $request->category);
+    
+        $activities = $query->orderBy('scheduled_at', 'asc')->get();
+        $total = $activities->count();
+    
+        if ($api) {
+            return [
+                'activities' => $activities,
+                'total' => $total,
+            ];
         }
-
-        $activities = $query->orderBy('scheduled_at', 'asc')->paginate(10);
-        $total = $activities->total();
-
-        return view('activities.results', compact('activities', 'total'));
-}
+    
+        return [
+            'activities' => $activities,
+            'total' => $total,
+        ];
+    }
 
     /**
      * Display the specified resource.

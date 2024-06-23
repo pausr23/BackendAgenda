@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RegisteredActivityController;
 use App\Http\Controllers\CategoriesActivityController;
 use App\Http\Controllers\CoursesActivityController;
+use App\Http\Controllers\AdminActivityController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,3 +29,6 @@ Route::get('/activities/activity/{id}', [RegisteredActivityController::class, 's
 
 Route::get('/categories/all', [CategoriesActivityController::class, 'index']);
 Route::get('/courses/all', [CoursesActivityController::class, 'index']);
+
+Route::get('activities/search', [AdminActivityController::class, 'search']);
+Route::get('activities/api/search', [AdminActivityController::class, 'apiSearch'])->name('activities.api.search');

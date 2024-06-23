@@ -20,6 +20,7 @@ class RegisteredActivityController extends Controller
         'registered_activities.title',
         'registered_activities.image',
         'registered_activities.scheduled_at',
+        'registered_activities.description',
         'categories_activities.name as category',
         'status_activities.name as status',
         'courses_activities.name as course'
@@ -30,7 +31,7 @@ class RegisteredActivityController extends Controller
     ->get();
 
     foreach ($activities as $activity) {
-        $activity->image = "http://eventosbk.test/storage/images/".$activity->image;
+        $activity->image = "http://projectPlanner.test/storage/images/".$activity->image;
     }
 
     return $activities;
@@ -86,7 +87,7 @@ class RegisteredActivityController extends Controller
         ->where('registered_activities.id', $id)
         ->get();
 
-        $activity[0]->image = "http://eventosbk.test/storage/images/".$activity[0]->image;
+        $activity[0]->image = "http://projectplanner.test/storage/images/".$activity[0]->image;
 
         return $activity;
     }
