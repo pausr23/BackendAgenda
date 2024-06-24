@@ -36,6 +36,87 @@ class RegisteredActivityController extends Controller
 
     return $activities;
 }
+
+    public function indexFiltered($categoryId = 1, $statusId = 1)
+    {
+        $query = RegisteredActivity::query()
+            ->select(
+                'registered_activities.id',
+                'categories_activities.name as category',
+                'registered_activities.title',
+                'registered_activities.description',
+                'registered_activities.scheduled_at',
+                'status_activities.name as status',
+                'courses_activities.name as course'
+            )
+            ->join('categories_activities', 'registered_activities.categories_activities_id', '=', 'categories_activities.id')
+            ->join('status_activities', 'registered_activities.status_activities_id', '=', 'status_activities.id')
+            ->join('courses_activities', 'registered_activities.courses_activities_id', '=', 'courses_activities.id')
+            ->where('registered_activities.categories_activities_id', $categoryId)
+            ->where('registered_activities.status_activities_id', $statusId)
+            ->orderBy('scheduled_at', 'asc');
+
+        $activities = $query->get();
+
+        return response()->json($activities);
+    }
+
+
+    public function getWeeklyTasks($categoryId = 1, $statusId = 1)
+    {
+        $startOfWeek = now()->startOfWeek()->format('Y-m-d H:i:s');
+        $endOfWeek = now()->endOfWeek()->format('Y-m-d H:i:s');
+
+        $activities = RegisteredActivity::query()
+            ->select(
+                'registered_activities.id',
+                'categories_activities.name as category',
+                'registered_activities.title',
+                'registered_activities.description',
+                'registered_activities.scheduled_at',
+                'status_activities.name as status',
+                'courses_activities.name as course'
+            )
+            ->join('categories_activities', 'registered_activities.categories_activities_id', '=', 'categories_activities.id')
+            ->join('status_activities', 'registered_activities.status_activities_id', '=', 'status_activities.id')
+            ->join('courses_activities', 'registered_activities.courses_activities_id', '=', 'courses_activities.id')
+            ->where('registered_activities.categories_activities_id', $categoryId)
+            ->where('registered_activities.status_activities_id', $statusId)
+            ->whereBetween('registered_activities.scheduled_at', [$startOfWeek, $endOfWeek])
+            ->orderBy('scheduled_at', 'asc')
+            ->get();
+
+        return response()->json($activities);
+}
+
+    public function getDailyTasks($categoryId = 1, $statusId = 1)
+    {
+        $startOfDay = now()->startOfDay()->format('Y-m-d H:i:s');
+        $endOfDay = now()->endOfDay()->format('Y-m-d H:i:s');
+
+        $activities = RegisteredActivity::query()
+            ->select(
+                'registered_activities.id',
+                'categories_activities.name as category',
+                'registered_activities.title',
+                'registered_activities.description',
+                'registered_activities.scheduled_at',
+                'status_activities.name as status',
+                'courses_activities.name as course'
+            )
+            ->join('categories_activities', 'registered_activities.categories_activities_id', '=', 'categories_activities.id')
+            ->join('status_activities', 'registered_activities.status_activities_id', '=', 'status_activities.id')
+            ->join('courses_activities', 'registered_activities.courses_activities_id', '=', 'courses_activities.id')
+            ->where('registered_activities.categories_activities_id', $categoryId)
+            ->where('registered_activities.status_activities_id', $statusId)
+            ->whereBetween('registered_activities.scheduled_at', [$startOfDay, $endOfDay])
+            ->orderBy('scheduled_at', 'asc')
+            ->get();
+
+        return response()->json($activities);
+    }
+
+
     /**
      * Show the form for creating a new resource.
      */
@@ -43,6 +124,7 @@ class RegisteredActivityController extends Controller
     {
         //
     }
+    
 
     /**
      * Store a newly created resource in storage.

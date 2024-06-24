@@ -31,4 +31,8 @@ Route::get('/categories/all', [CategoriesActivityController::class, 'index']);
 Route::get('/courses/all', [CoursesActivityController::class, 'index']);
 
 Route::get('activities/search', [AdminActivityController::class, 'search']);
-Route::get('activities/api/search', [AdminActivityController::class, 'apiSearch'])->name('activities.api.search');
+
+Route::get('/registered-activities/filtered/{categoryId?}/{statusId?}', [RegisteredActivityController::class, 'indexFiltered']);
+
+Route::get('/registered-activities/weekly/{categoryId?}/{statusId?}', [RegisteredActivityController::class, 'getWeeklyTasks']);
+Route::get('/registered-activities/daily/{categoryId?}/{statusId?}', [RegisteredActivityController::class, 'getDailyTasks']);

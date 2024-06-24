@@ -16,29 +16,27 @@ class AdminActivityController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {
-        $activities = RegisteredActivity::select(
-            'registered_activities.id',
-            'categories_activities.name as category',
-            'registered_activities.title',
-            'registered_activities.description',
-            'registered_activities.scheduled_at',
-            'status_activities.name as status',
-            'courses_activities.name as course'
-        )
-        ->join('categories_activities', 'registered_activities.categories_activities_id', '=', 'categories_activities.id')
-        ->join('status_activities', 'registered_activities.status_activities_id', '=', 'status_activities.id')
-        ->join('courses_activities', 'registered_activities.courses_activities_id', '=', 'courses_activities.id') 
-        ->where('status_activities_id', 1)
-        ->orderBy('scheduled_at', 'asc')
-        ->get();
+{
+    $activities = RegisteredActivity::select(
+        'registered_activities.id',
+        'categories_activities.name as category',
+        'registered_activities.title',
+        'registered_activities.description',
+        'registered_activities.scheduled_at',
+        'status_activities.name as status',
+        'courses_activities.name as course'
+    )
+    ->join('categories_activities', 'registered_activities.categories_activities_id', '=', 'categories_activities.id')
+    ->join('status_activities', 'registered_activities.status_activities_id', '=', 'status_activities.id')
+    ->join('courses_activities', 'registered_activities.courses_activities_id', '=', 'courses_activities.id') 
+    ->orderBy('scheduled_at', 'asc')
+    ->get();
 
-        $categories = CategoriesActivity::all();
+    $categories = CategoriesActivity::all();
+    $total = $activities->count(); 
 
-        $total = RegisteredActivity::where('status_activities_id', 1)->count();
-
-        return view('activities.index', compact('activities', 'total', 'categories'));
-    }
+    return view('activities.index', compact('activities', 'total', 'categories'));
+}
 
     /**
      * Show the form for creating a new resource.
@@ -74,62 +72,31 @@ class AdminActivityController extends Controller
         return redirect()->route('activities.index')->with('success','Activity registered successfully.');
     }
 
-
     public function search(Request $request)
-    {
-        $result = $this->performSearch($request, false);
-    
-        $activities = $result['activities'];
-        $total = $result['total'];
-    
-        return view('activities.results', compact('activities', 'total'));
-    }
-    
-    public function apiSearch(Request $request)
-    {
-        $result = $this->performSearch($request, true);
-    
-        return response()->json([
-            'data' => $result['activities'],
-            'total' => $result['total'],
-        ]);
-    }
-    
-    private function performSearch(Request $request, $api = false)
     {
         $query = RegisteredActivity::select(
             'registered_activities.id',
+            'categories_activities.id as category_id',
             'categories_activities.name as category',
-            'courses_activities.name as course',
-            'registered_activities.description',
-            'registered_activities.image',
             'registered_activities.title',
-            'status_activities.name as status',
+            'courses_activities.name as course',
             'registered_activities.scheduled_at'
         )
         ->join('categories_activities', 'registered_activities.categories_activities_id', '=', 'categories_activities.id')
-        ->join('courses_activities', 'registered_activities.courses_activities_id', '=', 'courses_activities.id')
-        ->join('status_activities', 'registered_activities.status_activities_id', '=', 'status_activities.id')
-        ->where('status_activities_id', 1);
-    
-        if ($request->has('title') && $request->title != '') {
-            $query->where('registered_activities.title', 'LIKE', '%' . $request->title . '%');
+        ->join('courses_activities', 'registered_activities.courses_activities_id', '=', 'courses_activities.id');
+
+        if ($request->category != 0) {
+            $query->where('categories_activities.id', $request->category);
         }
-    
+
+        if ($request->has('activity') && !empty($request->activity)) {
+            $query->where('registered_activities.title', 'LIKE', '%' . $request->activity . '%');
+        }
+
         $activities = $query->orderBy('scheduled_at', 'asc')->get();
         $total = $activities->count();
-    
-        if ($api) {
-            return [
-                'activities' => $activities,
-                'total' => $total,
-            ];
-        }
-    
-        return [
-            'activities' => $activities,
-            'total' => $total,
-        ];
+
+        return view('activities.results', compact('activities', 'total'));
     }
 
     /**
