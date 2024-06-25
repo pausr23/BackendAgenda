@@ -29,20 +29,20 @@
         <div>
             <div class="mt-2 mb-2">
                 <div>
-                    <label for="image" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Activity Image:</label>
+                    <label for="image" class="block mb-2  font-medium text-gray-900">Activity Image:</label>
                     
                     <img class="w-96" id="preview" src="{{ asset('storage/images/'.$activity->image) }}" alt="activity">
 
                     <input type="hidden" name="old_image" value="{{ $activity->image }}">
                 
-                    <input type="file" accept=".jpg, .png" id="image" class="w-96 bg-gray-10 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" name="image">
+                    <input type="file" accept=".jpg, .png" id="image" class="w-96 bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5" name="image">
                 </div>
             </div>
             
             <div class="mt-2 mb-2">
                 <div>
-                    <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Category:</label>
-                    <select name="categories_activities_id" class="w-96 bg-gray-10 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    <label for="first_name" class="block mb-2 font-medium text-gray-900">Category:</label>
+                    <select name="categories_activities_id" class="w-96 bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5">
                         @foreach ($categories as $category)
                             @if ($category->id == $activity->categories_activities_id)
                                 <option value="{{ $category->id }}" selected>{{ $category->name }}</option>
@@ -57,8 +57,8 @@
 
             <div class="mt-2 mb-2">
                 <div>
-                    <label for="courses_activities_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Course:</label>
-                    <select name="courses_activities_id" class="w-96 bg-gray-10 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    <label for="courses_activities_id" class="block mb-2 font-medium text-gray-900">Course:</label>
+                    <select name="courses_activities_id" class="w-96 bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5">
                         @foreach ($courses as $course)
                             @if ($course->id == $activity->courses_activities_id)
                                 <option value="{{ $course->id }}" selected>{{ $course->name }}</option>
@@ -72,8 +72,8 @@
 
             <div class="mt-2 mb-2">
                 <div>
-                    <label for="status_activities_id" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Status:</label>
-                    <select name="status_activities_id" class="w-96 bg-gray-10 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    <label for="status_activities_id" class="block mb-2 font-medium text-gray-900">Status:</label>
+                    <select name="status_activities_id" class="w-96 bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5">
                         @foreach ($status as $single_status)
                             @if ($single_status->id == $activity->status_activities_id)
                                 <option value="{{ $single_status->id }}" selected>{{ $single_status->name }}</option>
@@ -87,22 +87,22 @@
 
             <div class="mt-2 mb-2">
                 <div>
-                    <label for="title" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Title:</label>
-                    <input type="text" class="w-96 bg-gray-10 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" name="title" placeholder="Activity Title" value="{{ $activity->title }}">
+                    <label for="title" class="block mb-2 font-medium text-gray-900">Title:</label>
+                    <input type="text" class="w-96 bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5" name="title" placeholder="Activity Title" value="{{ $activity->title }}">
                 </div>
             </div>
 
             <div class="mt-2 mb-2">
                 <div>
-                    <label for="description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Subtitle:</label>
-                    <input type="text" class="w-96 bg-gray-10 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" name="description" placeholder="Activity Description" value="{{ $activity->description }}">
+                    <label for="description" class="block mb-2 font-medium text-gray-900">Subtitle:</label>
+                    <input type="text" class="w-96 bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5" name="description" placeholder="Activity Description" value="{{ $activity->description }}">
                 </div>
             </div>
 
             <div class="mt-2 mb-2">
                 <div>
-                    <label for="scheduled_at" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Date:</label>
-                    <input type="datetime-local" class="w-96 bg-gray-10 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" name="scheduled_at" placeholder="year-month-day" value="{{ $activity->scheduled_at }}">
+                    <label for="scheduled_at" class="block mb-2 font-medium text-gray-900">Date:</label>
+                    <input type="datetime-local" class="w-96 bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5" name="scheduled_at" placeholder="year-month-day" value="{{ $activity->scheduled_at }}">
                 </div>
             </div>
 
