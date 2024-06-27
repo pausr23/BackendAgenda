@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
 use App\Models\CoursesActivity;
 use App\Models\RegisteredActivity;
 
@@ -13,68 +12,41 @@ class CoursesActivityController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-{
-    $courses = CoursesActivity::select(
-        'courses_activities.id',
-        'courses_activities.name'
-    )->get();
-
-    foreach ($courses as $course) {
-        $activities = RegisteredActivity::where('courses_activities_id', $course->id)
-            ->where('status_activities_id', 1)
-            ->count();
-
-        $course['activities'] = $activities;
-    }
-
-    return $courses;
-}
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
     {
-        //
+        $courses = CoursesActivity::select(
+            'courses_activities.id',
+            'courses_activities.name'
+        )->get();
+
+        foreach ($courses as $course) {
+            $activities = RegisteredActivity::where('courses_activities_id', $course->id)
+                ->where('status_activities_id', 1)
+                ->count();
+
+            $course['activities'] = $activities;
+        }
+
+        return $courses;
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Assign courses to a user.
      */
-    public function store(Request $request)
+    public function assignCourses(Request $request, $userId)
     {
-        //
-    }
+        // Obtener los IDs de cursos seleccionados desde la solicitud
+        $selectedCourses = $request->input('selectedCourses');
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
+        // Asignar los cursos seleccionados al usuario dado
+        // Suponiendo que tienes una tabla pivot para la relación entre usuarios y cursos
+        // Ejemplo: users_courses (user_id, course_id)
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
+        // Aquí debes implementar la lógica para guardar las asignaciones en la base de datos
+        // Por ejemplo:
+        // foreach ($selectedCourses as $courseId) {
+        //     $user->courses()->attach($courseId);
+        // }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        return response()->json(['message' => 'Courses assigned successfully.']);
     }
 }

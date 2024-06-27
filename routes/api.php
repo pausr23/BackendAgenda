@@ -7,6 +7,10 @@ use App\Http\Controllers\RegisteredActivityController;
 use App\Http\Controllers\CategoriesActivityController;
 use App\Http\Controllers\CoursesActivityController;
 use App\Http\Controllers\AdminActivityController;
+use App\Http\Controllers\RegisteredUsersController;
+use App\Http\Controllers\UserCourseController;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -36,3 +40,21 @@ Route::get('/registered-activities/filtered/{categoryId?}/{statusId?}', [Registe
 
 Route::get('/registered-activities/weekly/{categoryId?}/{statusId?}', [RegisteredActivityController::class, 'getWeeklyTasks']);
 Route::get('/registered-activities/daily/{categoryId?}/{statusId?}', [RegisteredActivityController::class, 'getDailyTasks']);
+
+
+Route::get('/register', [RegisteredUsersController::class, 'store']);
+Route::get('/login', [RegisteredUsersController::class, 'login']);
+
+Route::get('/courses', [CoursesActivityController::class, 'index']);
+
+Route::get('/students', [UserCourseController::class, 'indexApi'])->name('students.index.api');
+
+Route::group(['prefix' => 'users'], function () {
+    Route::post('register', [RegisteredUsersController::class, 'store']);
+    Route::post('login', [RegisteredUsersController::class, 'login']);
+    Route::post('logout', [RegisteredUsersController::class, 'logout'])->middleware('auth:sanctum');
+    Route::get('user', [RegisteredUsersController::class, 'show'])->middleware('auth:sanctum');
+
+    Route::post('user/courses', [UserCourseController::class, 'store']);
+});
+

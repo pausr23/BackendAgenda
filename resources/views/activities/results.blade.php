@@ -20,6 +20,7 @@
                 <th scope="col" class="px-6 py-3" width="280px">Action</th>
             </tr>
         </thead>
+
         <tbody>
             @foreach ($activities as $activity)
             <tr class="border-b border-neutral-200 dark:border-white/10">
@@ -42,7 +43,10 @@
                 </td>
             </tr>
             @endforeach
+
+            
         </tbody>
+
     </table>
     
    

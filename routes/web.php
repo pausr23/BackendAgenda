@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AdminActivityController;
 use App\Http\Controllers\UsersController;
+use App\Http\Controllers\UserCourseController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,6 +20,8 @@ use App\Http\Controllers\UsersController;
 Route::get('/login', [UsersController::class, 'login'])->name('admin.login');
 Route::post('/admin/account/check', [UsersController::class, 'check'])->name('admin.check');
 Route::get('/admin/account/register', [UsersController::class, 'create'])->name('admin.register');
+
+Route::get('/students', [UserCourseController::class, 'index'])->name('students.index');
 
     Route::middleware('auth.admin')->group(function () {
     Route::post('/admin/account/logout', [UsersController::class, 'logout'])->name('admin.logout');

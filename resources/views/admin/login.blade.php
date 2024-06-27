@@ -4,7 +4,7 @@
     <div>
         <div class="text-center">
             <div>
-                <h2 class="mb-2 mt-2 text-4xl font-medium leading-tight text-white">User Login</h2>
+                <h2 class="mb-8 mt-2 text-4xl font-medium leading-tight text-black">User Login</h2>
             </div>
             
         </div>
